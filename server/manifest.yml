@@ -1,11 +1,11 @@
   applications:
-  - name: djangoapp
+  - name: djangoapp-final
     routes:
-      - route: $HOST.$DOMAIN
+      - route: benkline33.apic.mybluemix.net
     memory: 128M
     buildpack: python_buildpack
-  - name: djangoapp-nginx
+  - name: djangoapp-final-nginx
     routes:
-      - route: $HOST.$DOMAIN/static
+      - route: benkline332.apic.mybluemix.net
     memory: 128M
     buildpack: staticfile_buildpack
