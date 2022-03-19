@@ -6,6 +6,6 @@
     buildpack: python_buildpack
   - name: djangoapp-final-nginx
     routes:
-      - route: benkline332.apic.mybluemix.net
+      - route: benkline33.apic.mybluemix.net/static
     memory: 128M
     buildpack: staticfile_buildpack
