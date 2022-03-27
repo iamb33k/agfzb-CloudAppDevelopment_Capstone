@@ -119,7 +119,6 @@ def get_dealer_details(request, dealer_id):
 # def add_review(request, dealer_id):
 # ...
 
-def add_review(request, id):
 def add_review(request, dealer_id):
     context = {}
     dealer_url = "https://94a8ef39-6677-488f-a7a3-e87bcb747707-bluemix.cloudantnosqldb.appdomain.cloud"
