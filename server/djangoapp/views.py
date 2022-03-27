@@ -151,6 +151,6 @@ def add_review(request, dealer_id):
             payload["car_year"] = int(car.year.strftime("%Y"))
             new_payload = {}
             new_payload["review"] = payload
-            review_post_url = "https://9262a942.eu-gb.apigw.appdomain.cloud/api/post-review"
+            review_post_url = "https://94a8ef39-6677-488f-a7a3-e87bcb747707-bluemix.cloudantnosqldb.appdomain.cloud"
             post_request(review_post_url, new_payload, id=dealer_id)
         return redirect("djangoapp:dealer_details", id=dealer_id)
