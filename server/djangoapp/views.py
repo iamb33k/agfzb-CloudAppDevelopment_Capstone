@@ -43,7 +43,7 @@ def login_request(request):
     if user is not None:
             # If user is valid, call login method to login current user
             login(request, user)
-            return redirect('djangoapp/index.html')
+            return redirect('djangoapp:index.html')
     else:
             # If not, return to login page again
             return render(request, 'djangoapp/user_login.html', context)
@@ -56,7 +56,7 @@ def logout_request(request):
     # Logout user in the request
     logout(request)
     # Redirect user back to course list view
-    return redirect('djangoapp:get_dealerships')
+    return redirect('djangoapp:index')
 
 # Create a `registration_request` view to handle sign up request
 def registration_request(request):
@@ -86,7 +86,7 @@ def registration_request(request):
                                             password=password)
             # Login the user and redirect to course list page
             login(request, user)
-            return redirect("djangoapp:get_dealerships")
+            return redirect("djangoapp:index")
         else:
             return render(request, 'djangoapp/registration.html', context)
 
@@ -94,7 +94,7 @@ def registration_request(request):
 def get_dealerships(request):
     context = {}
     if request.method == "GET":
-        url = "https://94a8ef39-6677-488f-a7a3-e87bcb747707-bluemix.cloudantnosqldb.appdomain.cloud"
+        url = "https://us-south.functions.cloud.ibm.com/api/v1/namespaces/benkline33%40gmail.com_dev/actions/finalproj/getdealerships"
         # Get dealers from the URL
         dealerships = get_dealers_from_cf(url)
         context['dealership_review'] = dealerships
@@ -106,14 +106,19 @@ def get_dealerships(request):
 
 # Create a `get_dealer_details` view to render the reviews of a dealer
 # def get_dealer_details(request, dealer_id):
-def get_dealer_details(request, dealer_id):
+def get_dealer_details(request, id):
     if request.method == "GET":
-        context= {}
-        url='https://94a8ef39-6677-488f-a7a3-e87bcb747707-bluemix.cloudantnosqldb.appdomain.cloud'
-        dealerships = get_dealer_reviews_from_cf(url, dealer_id)
-        context['dealership_review'] = dealerships
-        # Return a list of dealer short name
-        (request, 'djangoapp/dealer_details.html', context)
+        context = {}
+        dealer_url = "https://us-south.functions.cloud.ibm.com/api/v1/namespaces/benkline33%40gmail.com_dev/actions/finalproj/getdealerships"
+        dealer = get_dealer_by_id_from_cf(dealer_url, id=id)
+        context["dealer"] = dealer
+    
+        review_url = "https://us-south.functions.cloud.ibm.com/api/v1/namespaces/benkline33%40gmail.com_dev/actions/finalproj/getreview"
+        reviews = get_dealer_reviews_from_cf(review_url, id=id)
+        print(reviews)
+        context["reviews"] = reviews
+        
+        return render(request, 'djangoapp/dealer_details.html', context)
 
 # Create a `add_review` view to submit a review
 # def add_review(request, dealer_id):
