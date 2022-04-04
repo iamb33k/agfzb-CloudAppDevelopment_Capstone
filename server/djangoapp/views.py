@@ -94,7 +94,7 @@ def registration_request(request):
 def get_dealerships(request):
     context = {}
     if request.method == "GET":
-        url = "https://us-south.functions.cloud.ibm.com/api/v1/namespaces/benkline33%40gmail.com_dev/actions/finalproj/getdealerships"
+        url = "https://us-south.functions.cloud.ibm.com/api/v1/namespaces/benkline33%40gmail.com_djangoserver-space/actions/get-dealership"
         # Get dealers from the URL
         dealerships = get_dealers_from_cf(url)
         context['dealership_review'] = dealerships
@@ -109,11 +109,11 @@ def get_dealerships(request):
 def get_dealer_details(request, id):
     if request.method == "GET":
         context = {}
-        dealer_url = "https://us-south.functions.cloud.ibm.com/api/v1/namespaces/benkline33%40gmail.com_dev/actions/finalproj/getdealerships"
+        dealer_url = "https://us-south.functions.cloud.ibm.com/api/v1/namespaces/benkline33%40gmail.com_djangoserver-space/actions/getdealership-py"
         dealer = get_dealer_by_id_from_cf(dealer_url, id=id)
         context["dealer"] = dealer
     
-        review_url = "https://us-south.functions.cloud.ibm.com/api/v1/namespaces/benkline33%40gmail.com_dev/actions/finalproj/getreview"
+        review_url = "https://us-south.functions.cloud.ibm.com/api/v1/namespaces/benkline33%40gmail.com_djangoserver-space/actions/get-review-py"
         reviews = get_dealer_reviews_from_cf(review_url, id=id)
         print(reviews)
         context["reviews"] = reviews
@@ -126,7 +126,7 @@ def get_dealer_details(request, id):
 
 def add_review(request, dealer_id):
     context = {}
-    dealer_url = "https://94a8ef39-6677-488f-a7a3-e87bcb747707-bluemix.cloudantnosqldb.appdomain.cloud"
+    dealer_url = "https://us-south.functions.cloud.ibm.com/api/v1/namespaces/benkline33%40gmail.com_djangoserver-space/actions/post-reviews-py"
     dealer = get_dealer_reviews_from_cf(dealer_url, id=dealer_id)
     context["dealer"] = dealer
     if request.method == 'GET':
@@ -155,6 +155,6 @@ def add_review(request, dealer_id):
             payload["car_year"] = int(car.year.strftime("%Y"))
             new_payload = {}
             new_payload["review"] = payload
-            review_post_url = "https://94a8ef39-6677-488f-a7a3-e87bcb747707-bluemix.cloudantnosqldb.appdomain.cloud"
+            review_post_url = "https://us-south.functions.cloud.ibm.com/api/v1/namespaces/benkline33%40gmail.com_djangoserver-space/actions/post-reviews-py"
             post_request(review_post_url, new_payload, id=dealer_id)
         return redirect("djangoapp:dealer_details", id=dealer_id)
