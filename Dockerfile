@@ -6,7 +6,7 @@ FROM python:3.8.2
     RUN apt-get update \
         && apt-get install -y netcat
 
-    ENV APP=/app
+    ENV APP=/agfzb-CloudAppDevelopment_Capstone
 
     # Change the workdir.
     WORKDIR $APP
