@@ -43,7 +43,7 @@ def login_request(request):
     if user is not None:
             # If user is valid, call login method to login current user
             login(request, user)
-            return redirect('djangoapp:index.html')
+            return redirect('djangoapp:index')
     else:
             # If not, return to login page again
             return render(request, 'djangoapp/user_login.html', context)
@@ -94,7 +94,7 @@ def registration_request(request):
 def get_dealerships(request):
     context = {}
     if request.method == "GET":
-        url = "https://us-south.functions.cloud.ibm.com/api/v1/namespaces/benkline33%40gmail.com_djangoserver-space/actions/get-dealership"
+        url = "https://3d6cb768.us-south.apigw.appdomain.cloud/django/dealership"
         # Get dealers from the URL
         dealerships = get_dealers_from_cf(url)
         context['dealership_review'] = dealerships
@@ -109,11 +109,11 @@ def get_dealerships(request):
 def get_dealer_details(request, id):
     if request.method == "GET":
         context = {}
-        dealer_url = "https://us-south.functions.cloud.ibm.com/api/v1/namespaces/benkline33%40gmail.com_djangoserver-space/actions/getdealership-py"
+        dealer_url = "https://3d6cb768.us-south.apigw.appdomain.cloud/django/dealership"
         dealer = get_dealer_by_id_from_cf(dealer_url, id=id)
         context["dealer"] = dealer
     
-        review_url = "https://us-south.functions.cloud.ibm.com/api/v1/namespaces/benkline33%40gmail.com_djangoserver-space/actions/get-review-py"
+        review_url = "https://3d6cb768.us-south.apigw.appdomain.cloud/django/review"
         reviews = get_dealer_reviews_from_cf(review_url, id=id)
         print(reviews)
         context["reviews"] = reviews
@@ -126,8 +126,8 @@ def get_dealer_details(request, id):
 
 def add_review(request, dealer_id):
     context = {}
-    dealer_url = "https://us-south.functions.cloud.ibm.com/api/v1/namespaces/benkline33%40gmail.com_djangoserver-space/actions/post-reviews-py"
-    dealer = get_dealer_reviews_from_cf(dealer_url, id=dealer_id)
+    dealer_url = "https://3d6cb768.us-south.apigw.appdomain.cloud/django/dealership"
+    dealer = get_dealer_by_id_from_cf(dealer_url, id=dealer_id)
     context["dealer"] = dealer
     if request.method == 'GET':
         cars = CarModel.objects.filter(id=dealer_id)
@@ -155,6 +155,6 @@ def add_review(request, dealer_id):
             payload["car_year"] = int(car.year.strftime("%Y"))
             new_payload = {}
             new_payload["review"] = payload
-            review_post_url = "https://us-south.functions.cloud.ibm.com/api/v1/namespaces/benkline33%40gmail.com_djangoserver-space/actions/post-reviews-py"
+            review_post_url = "https://3d6cb768.us-south.apigw.appdomain.cloud/django/review"
             post_request(review_post_url, new_payload, id=dealer_id)
         return redirect("djangoapp:dealer_details", id=dealer_id)
