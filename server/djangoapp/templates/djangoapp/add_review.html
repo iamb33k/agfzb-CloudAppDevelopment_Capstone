@@ -14,7 +14,7 @@
     <!--Add review form here -->
     {% include "djangoapp/header.html" %}
 
-        <form action="{%url'djangoapp:add_review'dealerId}}" method="post">
+    <form action="{% url 'djangoapp:add_review' dealer.id%}" method="post">
             <div class="container">
                 {% csrf_token %}
                 <h1>Write a review</h1>

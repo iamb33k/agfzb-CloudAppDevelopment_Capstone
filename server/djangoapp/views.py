@@ -122,13 +122,13 @@ def get_dealer_details(request, id):
 # def add_review(request, dealer_id):
 # ...
 
-def add_review(request, dealer_id):
+def add_review(request, id):
     context = {}
     dealer_url = "https://3d6cb768.us-south.apigw.appdomain.cloud/django/dealership"
-    dealer = get_dealer_by_id_from_cf(dealer_url, id=dealer_id)
+    dealer = get_dealer_by_id_from_cf(dealer_url, id=id)
     context["dealer"] = dealer
     if request.method == 'GET':
-        cars = CarModel.objects.filter(id=dealer_id)
+        cars = CarModel.objects.filter(id=id)
         context["cars"] = cars
         return render(request, 'djangoapp/add_review.html', context)
     elif request.method == 'POST':
@@ -140,8 +140,8 @@ def add_review(request, dealer_id):
             car = CarModel.objects.get(pk=car_id)
             payload["time"] = datetime.utcnow().isoformat()
             payload["name"] = username
-            payload["dealership"] = dealer_id
-            payload["id"] = dealer_id
+            payload["dealership"] = id
+            payload["id"] = id
             payload["review"] = request.POST["content"]
             payload["purchase"] = False
             if "purchasecheck" in request.POST:
@@ -154,5 +154,5 @@ def add_review(request, dealer_id):
             new_payload = {}
             new_payload["review"] = payload
             review_post_url = "https://3d6cb768.us-south.apigw.appdomain.cloud/django/review"
-            post_request(review_post_url, new_payload, id=dealer_id)
-        return redirect("djangoapp:dealer_details", id=dealer_id)
+            post_request(review_post_url, new_payload, id=id)
+        return redirect("djangoapp:dealer_details", id=id)
