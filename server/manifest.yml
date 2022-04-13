@@ -1,11 +1,11 @@
   applications:
-  - name: djangoapp-final
+  - name: djangoapp-final-bk33
     routes:
-      - route: benkline33.apic.mybluemix.net
+      - route: benkline33.mybluemix.net
     memory: 128M
     buildpack: python_buildpack
-  - name: djangoapp-final-nginx
+  - name: djangoapp-final-nginx-bk33
     routes:
-      - route: benkline33.apic.mybluemix.net/static
+      - route: benkline33.mybluemix.net/static
     memory: 128M
     buildpack: staticfile_buildpack
